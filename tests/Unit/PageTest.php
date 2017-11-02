@@ -13,13 +13,13 @@ class PageTest extends TestCase
     public function testHasTextsRelationship()
     {
         $page = factory(\App\Page::class)->create();
-        factory(\App\Text::class, 3)->create()
+        $i = 0;
+        factory(\App\Text::class, 3)->create(['page_id' => $page->id, 'order' => $i++])
                                     ->each(function($text) use ($page) {
-                                        $page->texts()->attach($text->id);
+                                        $page->texts()->save($text);
                                     });
-        $this->assertEquals($page->texts->count(), 3);
+        $this->assertEquals(3, $page->texts->count());
     }
-    
 
     public function testHasChoicesRelationship()
     {
@@ -28,5 +28,6 @@ class PageTest extends TestCase
                                     ->each(function($text) use ($page) {
                                         $page->choices()->attach($text->id);
                                     });
-        $this->assertEquals($page->choices->count(), 3);
-    }}
+        $this->assertEquals(3, $page->choices->count());
+    }
+}

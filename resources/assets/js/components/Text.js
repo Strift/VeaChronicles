@@ -1,52 +1,56 @@
 import React, {Component} from 'react'
 
-export default class Message extends Component {
+export default class Text extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: this.props.delay > 0 ? false : true,
-      visibleChars: this.props.speed > 0 ? 0 : this.props.content.length
+    constructor(props) {
+        super(props)
+        this.state = {
+            visible: this.props.delay > 0 ? false : true,
+            visibleChars: this.props.speed > 0 ? 0 : this.props.content.length
+        }
+        this.initDelay = this.initDelay.bind(this)
+        this.initPrinting = this.initPrinting.bind(this)
+        this.handlePrinting = this.handlePrinting.bind(this)
     }
-    this.initDelay()
-    this.initPrinting()
-  }
 
-  initDelay() {
-    if (this.props.delay > 0) {
-      setTimeout(this.handleTimeout, this.props.delay)
+    componentDidMount() {
+        this.initDelay()
+        this.initPrinting()
     }
-  }
-  
-  initPrinting() {
-    if (this.props.speed > 0 && this.state.visible) {
-      setTimeout(this.handlePrinting, this.props.speed)
+
+    initDelay() {
+        if (this.props.delay > 0) {
+            setTimeout(() => {
+                this.setState({ visible: true })
+                this.initPrinting()
+            }, this.props.delay)
+        }
     }
-  }
-
-  handleTimeout() {
-    this.setState({ visible: true })
-    this.initPrinting()
-  }
-  
-  handlePrinting() {
-    const count = this.state.visibleChars
-    this.setState({ visibleChars: count + 1 })
-    if (count+1 < this.props.content.length) {
-      setTimeout(this.handlePrinting, this.props.speed)
+    
+    initPrinting() {
+        if (this.props.speed > 0 && this.state.visible) {
+            setTimeout(this.handlePrinting, this.props.speed)
+        }
     }
-  }
+    
+    handlePrinting() {
+        const count = this.state.visibleChars
+        this.setState({ visibleChars: count + 1 })
+        if (count+1 < this.props.content.length) {
+            setTimeout(this.handlePrinting, this.props.speed)
+        }
+    }
 
-  renderContent() {
-    return <span>{this.props.content.substring(0, this.state.visibleChars)}</span>
-  }
+    renderContent() {
+        return <span>{this.props.content.substring(0, this.state.visibleChars)}</span>
+    }
 
-  render() {
-    return <span>{this.state.visible && this.renderContent()}</span>
-  }
+    render() {
+        return <span>{this.state.visible && this.renderContent()}</span>
+    }
 }
 
-Message.defaultProps = {
-  delay: 0,
-  speed: 0
+Text.defaultProps = {
+    delay: 0,
+    speed: 0
 }

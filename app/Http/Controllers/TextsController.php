@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Read;
+use App\Text;
+use App\Http\Resources\Text as TextResource;
 use Illuminate\Http\Request;
 
-class ReadController extends Controller
+class TextsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,21 +42,21 @@ class ReadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Read  $read
+     * @param  \App\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function show(Read $read)
+    public function show(Text $text)
     {
-        //
+        return new TextResource($text);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Read  $read
+     * @param  \App\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function edit(Read $read)
+    public function edit(Text $text)
     {
         //
     }
@@ -64,21 +65,22 @@ class ReadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Read  $read
+     * @param  \App\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Read $read)
+    public function update(Request $request, Text $text)
     {
-        //
+        $text->update($request->only(['content']));
+        return new TextResource($text);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Read  $read
+     * @param  \App\Text  $text
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Read $read)
+    public function destroy(Text $text)
     {
         //
     }

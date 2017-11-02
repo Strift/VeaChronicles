@@ -26,4 +26,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function reads()
+    {
+        return $this->hasMany(Read::class);
+    }
+
+    public function getCurrentPageAttribute()
+    {
+        $read = $this->reads()->get()->last();
+        if ($read != null) {
+            return $read->choice->nextPage;
+        }
+        return null;
+    }
 }

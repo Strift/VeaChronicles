@@ -16,8 +16,11 @@ class CreateTextsTable extends Migration
         Schema::create('texts', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content');
-            $table->integer('delay')->default(0);
-            $table->integer('speed')->default(0);
+            $table->integer('delay')->unsigned()->default(0);
+            $table->integer('speed')->unsigned()->default(0);
+            $table->integer('page_id')->unsigned();
+            $table->foreign('page_id')->references('id')->on('pages');
+            $table->integer('order')->unsigned();
             $table->timestamps();
         });
     }

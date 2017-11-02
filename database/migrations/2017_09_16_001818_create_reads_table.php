@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePageTextTable extends Migration
+class CreateReadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePageTextTable extends Migration
      */
     public function up()
     {
-        Schema::create('page_text', function (Blueprint $table) {
+        Schema::create('reads', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('page_id')->unsigned();
-            $table->foreign('page_id')->references('id')->on('pages');
-            $table->integer('text_id')->unsigned();
-            $table->foreign('text_id')->references('id')->on('texts');
+            $table->integer('choice_id')->unsigned();
+            $table->foreign('choice_id')->references('id')->on('choices');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePageTextTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page_text');
+        Schema::dropIfExists('reads');
     }
 }

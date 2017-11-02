@@ -8,11 +8,11 @@ class Page extends Model
 {
     public function texts()
     {
-    	return $this->belongsToMany(Text::class);
+        return $this->hasMany(Text::class);
     }
 
     public function choices()
     {
-    	return $this->belongsToMany(Choice::class);
+        return $this->belongsToMany(Choice::class);
     }
 }

@@ -17,7 +17,7 @@ class Choice extends Resource
         return [
             'id' => $this->id,
             'text' => $this->text,
-            'nextPage_id' => $this->nextPage_id,
+            'nextPageId' => $this->nextPage_id,
         ];
     }
 }

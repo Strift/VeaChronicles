@@ -13,29 +13,35 @@ class TestPagesSeeder extends Seeder
     {
         // Page 2
         $page2 = factory(\App\Page::class)->create();
-        $page2->texts()->attach(factory(\App\Text::class)->create([
-            'content' => "Réveillez-vous.",
+        factory(\App\Text::class)->create([
+            'content' => "Réveillez-vous. ",
             'delay' => 0,
             'speed' => 10,
-            ])->id);
-        $page2->texts()->attach(factory(\App\Text::class)->create([
+            'page_id' => $page2,
+            'order' => 0,
+            ]);
+        factory(\App\Text::class)->create([
             'content' => "Jeune [homme/femme], levez-vous.",
             'delay' => 1000,
             'speed' => 20,
-            ])->id);
+            'page_id' => $page2,
+            'order' => 1,
+            ]);
         // Page 1
         $page1 = factory(\App\Page::class)->create();
-        $page1->texts()->attach(factory(\App\Text::class)->create([
+        factory(\App\Text::class)->create([
             'content' => "Les rayons du soleil commencent à percer à travers la fenêtre à votre réveil. La pièce est à demi-éclairée et vous commencez à apercevoir peu à peu le décor. Une chambre… un lit… vous êtes allongé et ne pouvez bouger. Impossible de vous rappeler ce que vous faites là... Votre mal de tête vous empêche de réfléchir et vous succombez de nouveau à la fatigue.",
             'delay' => 0,
             'speed' => 0,
-            ]));
+            'page_id' => $page1,
+            'order' => 0,
+            ]);
         $page1->choices()->attach(factory(\App\Choice::class)->create([
-            'text' => "Que fais-je ici ?",
+            'text' => "\"Que fais-je ici ?\"",
             'nextPage_id' => $page2->id,
             ]));
         $page1->choices()->attach(factory(\App\Choice::class)->create([
-            'text' => "Qui êtes-vous ?",
+            'text' => "\"Qui êtes-vous ?\"",
             'nextPage_id' => $page2->id,
             ]));
     }
